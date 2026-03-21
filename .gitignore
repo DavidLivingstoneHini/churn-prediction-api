@@ -1,0 +1,41 @@
+# Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+venv/
+.venv/
+.pytest_cache/
+.coverage
+.mypy_cache/
+.ruff_cache/
+
+# ML artifacts (large binaries — store in volume or S3)
+backend/models/*.pkl
+backend/models/*.index
+backend/models/*.csv
+backend/models/*.joblib
+
+# Node
+node_modules/
+dist/
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+logs/
