@@ -48,14 +48,14 @@ cp env.example .env
 Edit `.env` — minimum values to fill in:
 
 ```env
-POSTGRES\_PASSWORD=choose\_any\_strong\_password
-DATABASE\_URL=postgresql+asyncpg://churn\_user:choose\_any\_strong\_password@postgres:5432/churn\_db
+POSTGRES\\\_PASSWORD=choose\\\_any\\\_strong\\\_password
+DATABASE\\\_URL=postgresql+asyncpg://churn\\\_user:choose\\\_any\\\_strong\\\_password@postgres:5432/churn\\\_db
 
-REDIS\_PASSWORD=choose\_any\_redis\_password
-REDIS\_URL=redis://:choose\_any\_redis\_password@redis:6379/0
+REDIS\\\_PASSWORD=choose\\\_any\\\_redis\\\_password
+REDIS\\\_URL=redis://:choose\\\_any\\\_redis\\\_password@redis:6379/0
 
-JWT\_SECRET=<run: openssl rand -hex 32>
-JWT\_REFRESH\_SECRET=<run: openssl rand -hex 32>
+JWT\\\_SECRET=<run: openssl rand -hex 32>
+JWT\\\_REFRESH\\\_SECRET=<run: openssl rand -hex 32>
 ```
 
 **On Windows PowerShell** (if openssl not available):
@@ -84,12 +84,12 @@ The Docker build automatically:
 You will see in the build output:
 
 ```
-\[1/6] Generating training dataset... 7043 rows | churn rate: 26.5%
-\[4/6] Training XGBoost + calibration...
-\[5/6] Evaluating model...
+\\\[1/6] Generating training dataset... 7043 rows | churn rate: 26.5%
+\\\[4/6] Training XGBoost + calibration...
+\\\[5/6] Evaluating model...
       AUC-ROC:   0.91xx
       Precision: 0.87xx
-\[6/6] Building FAISS index... Index contains 5634 vectors
+\\\[6/6] Building FAISS index... Index contains 5634 vectors
 ✅ Training complete.
 ```
 
@@ -102,7 +102,7 @@ Once running:
 ### 3\. Make yourself admin (run once)
 
 ```bash
-docker exec -it churn\_postgres psql -U churn\_user -d churn\_db \\
+docker exec -it churn\\\_postgres psql -U churn\\\_user -d churn\\\_db \\\\
   -c "UPDATE users SET role='admin' WHERE email='your@email.com';"
 ```
 
@@ -123,13 +123,13 @@ Raw Telco customer data is transformed into 22 model-ready features:
 
 Engineered features capture churn-relevant behaviours:
 
-* `charge\_per\_service` — high cost relative to services used signals dissatisfaction
-* `tenure\_monthly\_ratio` — stable long-term customers pay proportionally less over time
-* `avg\_monthly\_spend` — catches mid-contract price increases
+* `charge\\\_per\\\_service` — high cost relative to services used signals dissatisfaction
+* `tenure\\\_monthly\\\_ratio` — stable long-term customers pay proportionally less over time
+* `avg\\\_monthly\\\_spend` — catches mid-contract price increases
 
 ### Model
 
-* **Algorithm:** XGBoost with `scale\_pos\_weight` for class imbalance (73/27 split)
+* **Algorithm:** XGBoost with `scale\\\_pos\\\_weight` for class imbalance (73/27 split)
 * **Calibration:** Platt scaling via `CalibratedClassifierCV` for reliable probabilities
 * **Evaluation:** Stratified 80/20 split, AUC-ROC as primary metric
 
@@ -175,23 +175,23 @@ Population Stability Index compares training vs. recent inference distributions:
 |GET|`/api/v1/admin/drift`|PSI drift report|
 |GET|`/api/v1/admin/predictions/history`|Audit log|
 
-Full interactive docs at http://localhost:8001/docs
+Full interactive docs at http://localhost:8000/docs
 
 ## Sample Request
 
 ```bash
-curl -X POST http://localhost:8001/api/v1/predict/single \\
-  -H "Authorization: Bearer <token>" \\
-  -H "Content-Type: application/json" \\
+curl -X POST http://localhost:8001/api/v1/predict/single \\\\
+  -H "Authorization: Bearer <token>" \\\\
+  -H "Content-Type: application/json" \\\\
   -d '{
     "tenure": 6,
-    "monthly\_charges": 89.00,
-    "total\_charges": 534.00,
+    "monthly\\\_charges": 89.00,
+    "total\\\_charges": 534.00,
     "contract": "Month-to-month",
-    "internet\_service": "Fiber optic",
-    "payment\_method": "Electronic check",
-    "paperless\_billing": "Yes",
-    "senior\_citizen": 0,
+    "internet\\\_service": "Fiber optic",
+    "payment\\\_method": "Electronic check",
+    "paperless\\\_billing": "Yes",
+    "senior\\\_citizen": 0,
     "partner": "No",
     "dependents": "No"
   }'
@@ -213,23 +213,23 @@ pytest tests/ -v
 Expected output:
 
 ```
-tests/test\_features.py::test\_basic\_feature\_engineering PASSED
-tests/test\_features.py::test\_engineered\_features PASSED
-tests/test\_features.py::test\_feature\_count PASSED
-tests/test\_features.py::test\_single\_inference PASSED
-tests/test\_drift.py::test\_psi\_identical\_distributions PASSED
-tests/test\_drift.py::test\_psi\_different\_distributions PASSED
-tests/test\_drift.py::test\_drift\_detected PASSED
-tests/test\_drift.py::test\_no\_drift PASSED
-tests/test\_predictor.py::test\_predictor\_loads PASSED
-tests/test\_predictor.py::test\_prediction\_output PASSED
-tests/test\_predictor.py::test\_risk\_levels PASSED
-tests/test\_predictor.py::test\_similar\_customers PASSED
-tests/test\_api.py::test\_health PASSED
-tests/test\_api.py::test\_register PASSED
-tests/test\_api.py::test\_login PASSED
-tests/test\_api.py::test\_predict\_single PASSED
-tests/test\_api.py::test\_predict\_requires\_auth PASSED
+tests/test\\\_features.py::test\\\_basic\\\_feature\\\_engineering PASSED
+tests/test\\\_features.py::test\\\_engineered\\\_features PASSED
+tests/test\\\_features.py::test\\\_feature\\\_count PASSED
+tests/test\\\_features.py::test\\\_single\\\_inference PASSED
+tests/test\\\_drift.py::test\\\_psi\\\_identical\\\_distributions PASSED
+tests/test\\\_drift.py::test\\\_psi\\\_different\\\_distributions PASSED
+tests/test\\\_drift.py::test\\\_drift\\\_detected PASSED
+tests/test\\\_drift.py::test\\\_no\\\_drift PASSED
+tests/test\\\_predictor.py::test\\\_predictor\\\_loads PASSED
+tests/test\\\_predictor.py::test\\\_prediction\\\_output PASSED
+tests/test\\\_predictor.py::test\\\_risk\\\_levels PASSED
+tests/test\\\_predictor.py::test\\\_similar\\\_customers PASSED
+tests/test\\\_api.py::test\\\_health PASSED
+tests/test\\\_api.py::test\\\_register PASSED
+tests/test\\\_api.py::test\\\_login PASSED
+tests/test\\\_api.py::test\\\_predict\\\_single PASSED
+tests/test\\\_api.py::test\\\_predict\\\_requires\\\_auth PASSED
 ```
 
 ## Tech Stack
