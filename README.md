@@ -90,7 +90,7 @@ You will see in the build output:
       AUC-ROC:   0.91xx
       Precision: 0.87xx
 \\\[6/6] Building FAISS index... Index contains 5634 vectors
-✅ Training complete.
+✅ Training complete
 ```
 
 Once running:
